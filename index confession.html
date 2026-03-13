@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confession</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==================== PAGE 1 ==================== */
+        .page-1 {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .page-1 h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .page-1 .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .btn-open {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-open:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* ==================== PAGE 2 ==================== */
+        .page-2 {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .page-2.active {
+            display: flex;
+        }
+
+        .page-2 h2 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .page-2 .english {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        /* 5 MEME SLOTS */
+        .meme-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 700px;
+            margin: 20px 0 60px 0;
+        }
+
+        .meme-slot {
+            width: 150px;
+            height: 150px;
+            background: #e8e8e8;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .meme-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* BUTTONS CONTAINER */
+        .buttons-box {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 60px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-yes {
+            background: #1a1a1a;
+            color: #fff;
+            border: 2px solid #1a1a1a;
+            padding: 14px 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .btn-yes:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* EVADING NO BUTTON */
+        .btn-no {
+            background: #fff;
+            color: #1a1a1a;
+            border: 2px solid #1a1a1a;
+            padding: 14px 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            position: fixed;
+            z-index: 9999;
+            transition: all 0.25s ease;
+        }
+
+        /* ==================== PAGE 3 ==================== */
+        .page-3 {
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .page-3.active {
+            display: flex;
+        }
+
+        .page-3 h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+
+        /* BIG VIDEO - 3:4 Portrait Size */
+        .video-box {
+            width: 90%;
+            max-width: 500px;
+            aspect-ratio: 3/4;
+            background: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .video-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .final-message {
+            font-size: 1.5rem;
+            color: #555;
+            font-weight: 300;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .page-1 h1 { font-size: 2.5rem; }
+            .page-2 h2 { font-size: 1.75rem; }
+            .meme-slot { width: 100px; height: 100px; }
+            .btn-yes, .btn-no { padding: 12px 35px; }
+            .video-box { max-width: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PAGE 1 ==================== -->
+    <div class="page-1" id="page1">
+        <h1>Hi Crush</h1>
+        <p class="subtitle">Pwede pa open?</p>
+        <button class="btn-open" onclick="goPage2()">Open</button>
+    </div>
+
+    <!-- ==================== PAGE 2 ==================== -->
+    <div class="page-2" id="page2">
+        <h2>May feelings ka ba sa'kin?</h2>
+        <p class="english">Do you have feelings for me?</p>
+        
+        <!-- 5 MEME SLOTS -->
+        <div class="meme-container">
+            <div class="meme-slot">
+                <img src="img1.jpeg" alt="Meme 1" onerror="this.parentElement.innerHTML='Meme 1'">
+            </div>
+            <div class="meme-slot">
+                <img src="img2.jpeg" alt="Meme 2" onerror="this.parentElement.innerHTML='Meme 2'">
+            </div>
+            <div class="meme-slot">
+                <img src="img3.jpeg" alt="Meme 3" onerror="this.parentElement.innerHTML='Meme 3'">
+            </div>
+            <div class="meme-slot">
+                <img src="img4.jpeg" alt="Meme 4" onerror="this.parentElement.innerHTML='Meme 4'">
+            </div>
+            <div class="meme-slot">
+                <img src="img5.jpeg" alt="Meme 5" onerror="this.parentElement.innerHTML='Meme 5'">
+            </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="buttons-box">
+            <button class="btn-yes" onclick="goPage3()">Yes</button>
+            <button class="btn-no" id="noBtn" onmouseenter="escapeNo()" onmouseover="escapeNo()" onclick="escapeNo()">No</button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 3 ==================== -->
+    <div class="page-3" id="page3">
+        <h2>me rn.</h2>
+        <div class="video-box">
+            <video id="kiligVideo" loop playsinline>
+                <source src="kilig.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p class="final-message">HAHAHAHAHAH sakin ka lang!</p>
+    </div>
+
+    <script>
+        // Page 1 to Page 2
+        function goPage2() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').classList.add('active');
+            positionNoButton();
+        }
+
+        // Page 2 to Page 3 + AUTOPLAY VIDEO
+        function goPage3() {
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+            
+            // Play video only after clicking YES
+            const video = document.getElementById('kiligVideo');
+            video.play();
+        }
+
+        // Position No button initially
+        function positionNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.querySelector('.btn-yes');
+            const rect = yesBtn.getBoundingClientRect();
+            
+            noBtn.style.left = (rect.right + 30) + 'px';
+            noBtn.style.top = rect.top + 'px';
+        }
+
+        // Escape function
+        function escapeNo() {
+            const noBtn = document.getElementById('noBtn');
+            const padding = 30;
+            
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.random() * (maxX - padding) + padding;
+            const randomY = Math.random() * (maxY - padding) + padding;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (document.getElementById('page2').classList.contains('active')) {
+                escapeNo();
+            }
+        });
+
+        // Mobile touch support
+        document.getElementById('noBtn').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            escapeNo();
+        });
+    </script>
+
+</body>
+</html>
